@@ -31,6 +31,25 @@ FONT_7seg -- 9
 FONT_UNICODE -- 16
 ```
 
+# LCD reference
+
+### lcd.text(x, y, text, [color], transparent=True)
+
+Display the text at position (x,y). if color is not given use current foreground color.
+
+* **x**: horizontal position of the upper left point in pixels, special values can be given:
+	- CENTER, centers the text
+	- RIGHT, right justifies the text
+	- LASTX, continues from last X position; offset can be used: LASTX+n
+* **y**: vertical position of the upper left point in pixels, special values can be given:
+	- CENTER, centers the text
+	- BOTTOM, bottom justifies the text
+	- LASTY, continues from last Y position; offset can be used: LASTY+n
+* **text**: string to be displayed. Two special characters are allowed in strings:
+	- '\r' CR (0x0D), clears the display to EOL
+	- '\n' LF (ox0A), continues to the new line, x=0
+
+
 # References
 
 * [7-segment and 14-segment font](https://www.keshikan.net/fonts-e.html)
