@@ -6,29 +6,31 @@
 @author Miguel Maltez
 @date 20220822
 """
-from m5stack import lcd, btnA
-import time
+from m5stack import lcd, btnA, btnB
+import time, sys
 
 def drawTitle():
-	lcd.clear()
+	lcd.clear(0x101010)
 	lcd.font(lcd.FONT_Default)
 	lcd.print("7-seg test", lcd.RIGHT,0)
 
 def sevensegtest(dist, width):
 	lcd.font(lcd.FONT_7seg)
-	lcd.attrib7seg(dist, width, False, lcd.GREEN)
+	lcd.attrib7seg(dist, width, True, lcd.RED)
 	lcd.set_bg(lcd.BLACK)
 	lcd.set_fg(lcd.WHITE)
-	lcd.print("07:59",0,0,lcd.RED)
 	sw, sh = lcd.fontSize()
-	print(dist, width, sw, sh, sw*5)
+	lcd.rect(0,0, sw,sh, lcd.MAGENTA)
+	lcd.print("06:59",0,0,lcd.RED)
+	print(dist, width, sw, sh)
 
 lcd.setRotation(3) # landscape with button to the right
-drawTitle()
-sevensegtest(24,4)
 
-while not btnA.isPressed():
-	time.sleep_ms(100)
-
-drawTitle()
-sevensegtest(24,6)
+for width in range(24):
+	for dist in range(68):
+		drawTitle()
+		sevensegtest(dist, width)
+		while not btnA.isPressed():
+			time.sleep_ms(100)
+			if btnB.isPressed():
+				sys.exit()
